@@ -8,6 +8,10 @@ const morgan = require('morgan');
 
 const PORT = process.env.PORT || 3000;
 
+/* Routes */
+const userRoute = require('./routes/users');
+const auth = require('./routes/auth');
+
 /* MongoDb connection */
 mongoose.connect(
   process.env.MONGO_URL,
@@ -21,6 +25,9 @@ mongoose.connect(
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
+
+app.use('/api/users', userRoute);
+app.use('/api/auth', auth);
 
 app.listen(PORT, () => {
   console.log(`Server is listening to port : ${PORT}`);
